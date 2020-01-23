@@ -1,0 +1,7 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(Mink)
+FILE(GLOB_RECURSE Mink_SRC
+        "**/*.h"
+        "**/*.c")
+INCLUDE_DIRECTORIES(Mink PRIVATE "include/")
+ADD_EXECUTABLE(Mink ${Mink_SRC})
