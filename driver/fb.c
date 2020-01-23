@@ -41,13 +41,9 @@ uint16_t fb_put_char_at(char c, int8_t row, int8_t column, uint8_t color) {
     }
 
     switch (c) {
-        case 0x8:
-            fb[offset] = ' ';
-            fb[offset + 1] = color;
-            break;
-
         case '\n':
-            offset = FB_CURSOR_OFFSET(0, FB_GET_OFF_ROW(offset) + 1);
+            row = FB_GET_OFF_ROW(offset) + 1;
+            offset = FB_CURSOR_OFFSET(0, row);
             break;
 
         default:
@@ -67,6 +63,8 @@ uint16_t fb_put_str_at(const char *str, int8_t row, int8_t column, uint8_t color
         offset = fb_cursor_get_offset();
         row = FB_GET_OFF_ROW(offset);
         column = FB_GET_OFF_COLUMN(offset);
+    } else {
+        offset = FB_CURSOR_OFFSET(color, row);
     }
 
     while (*str) {
