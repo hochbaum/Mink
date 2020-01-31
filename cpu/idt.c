@@ -92,7 +92,7 @@ void idt_entry_set(uint16_t index, uint64_t base, uint16_t selector, uint8_t att
     idt_entries[index].selector = selector;
     idt_entries[index].attributes = attributes;
     idt_entries[index].offset_middle = (base >> 16) & 0xFFFF;
-    idt_entries[index].offset_high = (base >> 32) & 0xFFFF;
+    idt_entries[index].offset_high = (base >> 32) & 0xFFFFFFFF;
 }
 
 void idt_catch_all(registers_t registers) {
