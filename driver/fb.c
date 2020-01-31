@@ -1,7 +1,7 @@
 #include <mink/driver/fb.h>
 #include <mink/cpu/databus.h>
 
-static uint8_t *fb = (uint8_t*) FB_ADDRESS;
+static uint8_t *fb = (uint8_t *) FB_ADDRESS;
 
 static uint16_t fb_cursor_get_offset() {
     outb(FB_PORT_COMMAND, FB_COMMAND_HIGH_BYTE);

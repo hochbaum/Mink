@@ -35,13 +35,16 @@ _start:
     ; After that the EFER.LIME flag has to be set in our model-specific register. The last
     ; thing to do is finally enabling paging, which will put us into long mode.
 
-    MOV ESP, _stack_begin           ; set up our stack.
-
     CALL _check_long_mode           ; check if the processor is running 64bit at all.
     CALL _load_page_tables          ; initialize the page tables using huge pages.
     CALL _enter_long_mode
 
     LGDT [_GDT64.Pointer]           ; FINALLY load the GDT and enter long mode!
+
+    MOV AX, _GDT64.Data
+    MOV SS, AX
+    MOV DS, AX
+    MOV ES, AX
 
     EXTERN _enter_kmain64
     JMP _GDT64.Code:_enter_kmain64
@@ -135,13 +138,14 @@ _enter_long_mode:
 
     RET
 
-GDT64_FLAG_CODE_SEG	EQU 1 << 53 ; the segment is the code segment.
+GDT64_FLAG_CODE_SEG		EQU 1 << 53 ; the segment is the code segment.
 GDT64_ACCESS_PRESENT	EQU 1 << 47 ; the segment is present.
 GDT64_ACCESS_CODE_DATA	EQU 1 << 44 ; the segment is either the code or data segment.
 GDT64_ACCESS_EXECUTABLE EQU 1 << 43 ; the segment is executable.
 GDT64_ACCESS_READ_WRITE EQU 1 << 41 ; the segment is readable/writable.
 
 SECTION .rodata
+GLOBAL _GDT64
 _GDT64:
     DQ 0                            ; null descriptor.
 .Code: EQU $ - _GDT64
@@ -163,6 +167,7 @@ _p3_table:
 _p2_table:
     RESB 4096
 
+GLOBAL _stack_begin
 _stack_end:
     RESB 64
 _stack_begin:

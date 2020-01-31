@@ -7,7 +7,7 @@ CC = x86_64-elf-gcc
 AS = nasm
 LD = x86_64-elf-ld
 
-CFLAGS 	= -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c -fno-pic -Iinclude/
+CFLAGS 	= -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c -Iinclude/
 LDFLAGS = -T link.ld -n -melf_x86_64
 ASFLAGS = -f elf64
 

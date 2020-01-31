@@ -3,7 +3,10 @@
 
 /**
  * A very basic implementation of printf.
- * So far only string replacement is supported.
+ *
+ * %s: Replaces a string.
+ * %d: Replaces a decimal number.
+ * %%: Escapes a % sign.
  *
  * @param fmt Format.
  * @param ... Replacements.

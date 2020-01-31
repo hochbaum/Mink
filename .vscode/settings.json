@@ -1,9 +1,9 @@
 {
-    "C_Cpp.clang_format_sortIncludes": true,
-    "C_Cpp.default.includePath": [
-        "./include/"
-    ],
-    "editor.detectIndentation": false,
-    "editor.insertSpaces": false,
-    "editor.tabSize": 4
+  "C_Cpp.clang_format_sortIncludes": true,
+  "C_Cpp.default.includePath": [
+    "./include/"
+  ],
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": false,
+  "editor.tabSize": 4
 }

@@ -17,22 +17,22 @@
 #define FB_GET_OFF_COLUMN(offset)  ((offset - ((offset / (2 * FB_MAX_COL)) * 2 * FB_MAX_COL)) / 2)
 
 typedef enum fb_color {
-  FB_BLACK           = 0x0,
-  FB_BLUE            = 0x1,
-  FB_GREEN           = 0x2,
-  FB_CYAN            = 0x3,
-  FB_RED             = 0x4,
-  FB_MAGENTA         = 0x5,
-  FB_BROWN           = 0x6,
-  FB_LIGHT_GREY      = 0x7,
-  FB_DARK_GREY       = 0x8,
-  FB_LIGHT_BLUE      = 0x9,
-  FB_LIGHT_GREEN     = 0xA,
-  FB_LIGHT_CYAN      = 0xB,
-  FB_LIGHT_RED       = 0xC,
-  FB_LIGHT_MAGENTA   = 0xD,
-  FB_LIGHT_BROWN     = 0xE,
-  FB_WHITE           = 0xF
+    FB_BLACK = 0x0,
+    FB_BLUE = 0x1,
+    FB_GREEN = 0x2,
+    FB_CYAN = 0x3,
+    FB_RED = 0x4,
+    FB_MAGENTA = 0x5,
+    FB_BROWN = 0x6,
+    FB_LIGHT_GREY = 0x7,
+    FB_DARK_GREY = 0x8,
+    FB_LIGHT_BLUE = 0x9,
+    FB_LIGHT_GREEN = 0xA,
+    FB_LIGHT_CYAN = 0xB,
+    FB_LIGHT_RED = 0xC,
+    FB_LIGHT_MAGENTA = 0xD,
+    FB_LIGHT_BROWN = 0xE,
+    FB_WHITE = 0xF
 } fb_color_t;
 
 #define FB_COLOR(fg, bg) (((bg & 0x0F) << 4) | (fg & 0x0F))
