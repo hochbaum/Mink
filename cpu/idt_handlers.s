@@ -4,7 +4,7 @@ _isr_%1:
 	CLI
 	PUSH QWORD 0
 	PUSH QWORD %1
-	JMP  _idt_stub
+	JMP  _idt_stub_no_errno
 %ENDMACRO
 
 %MACRO errno_handler 1
@@ -12,13 +12,13 @@ GLOBAL _isr_%1
 _isr_%1:
 	CLI
 	PUSH QWORD %1
-	JMP  _idt_stub
+	JMP  _idt_stub_errno
 %ENDMACRO
 
+ALIGN 8
 SECTION .text
-GLOBAL _idt_stub
 EXTERN idt_catch_all
-_idt_stub:
+_idt_stub_no_errno:
 	PUSH RDI
 	PUSH RSI
 	PUSH RDX
@@ -39,11 +39,19 @@ _idt_stub:
 	MOV AX, DS		; push data segment.
 	PUSH RAX
 
+	MOV AX, 0x10
+	MOV DS, AX
+	MOV ES, AX
+	MOV FS, AX
+
 	MOV RDI, RSP	; move stack pointer into RDI, as it's used for the first argument.
 
 	CALL idt_catch_all 	; call the IDT main handler.
 
 	POP RAX
+	MOV DS, AX
+	MOV ES, AX
+	MOV FS, AX
 
 	POP R15
 	POP R14
@@ -62,6 +70,60 @@ _idt_stub:
 	POP RDI
 
 	ADD RSP, 16		; clean up the pushes we made in the interrupt handler.
+	IRETQ
+
+_idt_stub_errno:
+	PUSH RDI
+	PUSH RSI
+	PUSH RDX
+	PUSH RCX
+	PUSH RAX
+	PUSH R8
+	PUSH R9
+	PUSH R10
+	PUSH R11
+	PUSH RBX
+	PUSH RBP
+	PUSH R12
+	PUSH R13
+	PUSH R14
+	PUSH R15
+
+	XOR RAX, RAX	; clear out RAX.
+	MOV AX, DS		; push data segment.
+	PUSH RAX
+
+	MOV AX, 0x10
+	MOV DS, AX
+	MOV ES, AX
+	MOV FS, AX
+
+	MOV RDI, RSP	; move stack pointer into RDI, as it's used for the first argument.
+
+	CALL idt_catch_all 	; call the IDT main handler.
+
+	POP RAX
+	MOV DS, AX
+	MOV ES, AX
+	MOV FS, AX
+
+	POP R15
+	POP R14
+	POP R13
+	POP R12
+	POP RBP
+	POP RBX
+	POP R11
+	POP R10
+	POP R9
+	POP R8
+	POP RAX
+	POP RCX
+	POP RDX
+	POP RSI
+	POP RDI
+
+	ADD RSP, 8		; clean up the pushes we made in the interrupt handler.
 	IRETQ
 
 no_errno_handler 0

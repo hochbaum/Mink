@@ -103,8 +103,7 @@ void idt_catch_all(registers_t registers) {
 
         fb_put_str_at("[mink_kernel][ERROR] CPU fired exception: ", -1, -1, red_on_black);
         fb_put_str_at(messages[index], -1, -1, red_on_black);
-
-        asm("HLT");
+        fb_put_char_at('\n', -1, -1, red_on_black);
         return;
     }
 

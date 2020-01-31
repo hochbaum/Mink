@@ -2,13 +2,14 @@
 #include <stddef.h>
 #include <mink/driver/fb.h>
 #include <mink/cpu/idt.h>
+#include <mink/cpu/gdt.h>
 
 void kmain64() {
     fb_init();
     kprintf("[mink_kernel] Initialized framebuffer\n");
 
     gdt_init();
-    kprintf("[mink_kernel] Initialized new GDT... Checking it...\n");
+    kprintf("[mink_kernel] Initialized new GDT. Checking it:\n");
     for (int i = 0; i < 3; i++) {
         gdt_entry_t entry = gdt_entry_get(i);
         if (entry == 0) {
@@ -21,7 +22,10 @@ void kmain64() {
     }
 
     idt_init();
-    kprintf("[mink_kernel] Initialized IDT, now handling interrupts");
+    kprintf("[mink_kernel] Initialized IDT, now handling interrupts\n");
+
+    asm("INT $7");
+    asm("INT $8");
 
     fb_put_str_at("[mink_kernel][ERROR] kmain returned", -1, -1, FB_COLOR(FB_LIGHT_RED, FB_BLACK));
 }
