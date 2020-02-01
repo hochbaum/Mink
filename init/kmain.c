@@ -17,7 +17,7 @@ void kmain64() {
             kprintf("   - found: null descriptor\n");
         } else if (BIT(entry, 53)) {
             kprintf("   - found: code segment (%d)\n", entry);
-        } else if (!BIT(entry, 53) && BIT(entry, 44)) {
+        } else if (BIT(entry, 44)) {
             kprintf("   - found: data segment (%d)\n", entry);
         }
     }
@@ -31,5 +31,5 @@ void kmain64() {
     timer_init();
     kprintf("[mink_kernel] Initialized the timer\n");
 
-    fb_put_str_at("[mink_kernel][ERROR] kmain returned", -1, -1, FB_COLOR(FB_LIGHT_RED, FB_BLACK));
+    fb_put_str_at("[mink_kernel][ERROR] kmain returned\n", -1, -1, FB_COLOR(FB_LIGHT_RED, FB_BLACK));
 }
