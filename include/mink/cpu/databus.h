@@ -12,7 +12,7 @@
 void outb(uint16_t port, uint8_t data);
 
 /**
- * Thi function reads a byte from the specified I/O bus address.
+ * This function reads a byte from the specified I/O bus address.
  *
  * @param port Address of the I/O port.
  * @return Read byte.
