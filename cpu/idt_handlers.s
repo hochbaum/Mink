@@ -158,3 +158,21 @@ no_errno_handler 28
 no_errno_handler 29
 no_errno_handler 30
 no_errno_handler 31
+
+no_errno_handler 32
+no_errno_handler 33
+no_errno_handler 34
+no_errno_handler 35
+no_errno_handler 36
+no_errno_handler 37
+no_errno_handler 38
+no_errno_handler 39
+
+no_errno_handler 40
+no_errno_handler 41
+no_errno_handler 42
+no_errno_handler 43
+no_errno_handler 44
+no_errno_handler 45
+no_errno_handler 46
+no_errno_handler 47

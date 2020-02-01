@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <mink/driver/fb.h>
+#include <mink/driver/8259pic.h>
 
 static idt_t idt;
 static idt_entry_t idt_entries[IDT_MAX_ENTRIES];
@@ -51,6 +52,7 @@ void idt_init() {
 
     memset(&idt_entries, 0, sizeof(idt_entry_t) * IDT_MAX_ENTRIES);
 
+    // Intel reserved interrupts.
     ISR_SET(0)
     ISR_SET(1)
     ISR_SET(2)
@@ -84,7 +86,32 @@ void idt_init() {
     ISR_SET(30)
     ISR_SET(31)
 
+    // move IRQs of PIC1 to 32..39 and IRQs of PIC2 to 40..47.
+    pic_remap_irq(32, 40);
+
+    // PIC1 IRQs.
+    ISR_SET(32)
+    ISR_SET(33)
+    ISR_SET(34)
+    ISR_SET(35)
+    ISR_SET(36)
+    ISR_SET(37)
+    ISR_SET(38)
+    ISR_SET(39)
+
+    // PIC2 IRQs.
+    ISR_SET(40)
+    ISR_SET(41)
+    ISR_SET(42)
+    ISR_SET(43)
+    ISR_SET(44)
+    ISR_SET(45)
+    ISR_SET(46)
+    ISR_SET(47)
+
+    // load IDT and enable interrupts!
     __native_lidt(&idt);
+    __native_sti();
 }
 
 void idt_entry_set(uint16_t index, uint64_t base, uint16_t selector, uint8_t attributes) {
@@ -97,6 +124,7 @@ void idt_entry_set(uint16_t index, uint64_t base, uint16_t selector, uint8_t att
 
 void idt_catch_all(registers_t registers) {
     uint32_t index = registers.intno;
+
     // not an IRQ if ID is less than 32 since we remapped it.
     if (index < 32) {
         uint8_t red_on_black = FB_COLOR(FB_LIGHT_RED, FB_BLACK);
@@ -104,7 +132,6 @@ void idt_catch_all(registers_t registers) {
         fb_put_str_at("[mink_kernel][ERROR] CPU fired exception: ", -1, -1, red_on_black);
         fb_put_str_at(messages[index], -1, -1, red_on_black);
         fb_put_char_at('\n', -1, -1, red_on_black);
-        return;
     }
 
     isr_t isr = routines[index];
