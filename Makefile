@@ -14,7 +14,7 @@ ASFLAGS = -f elf64
 all: mink.iso
 
 run: mink.iso
-	@/usr/local/lib/qemu/x86_64-softmmu/qemu-system-x86_64 -hda mink.iso -m 4096
+	@qemu-system-x86_64 -hda mink.iso -m 4096
 
 mink.iso: kernel.elf
 	@mkdir -p build/boot/grub/
