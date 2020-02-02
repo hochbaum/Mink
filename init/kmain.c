@@ -4,6 +4,7 @@
 #include <mink/cpu/idt.h>
 #include <mink/cpu/gdt.h>
 #include <mink/driver/timer.h>
+#include <mink/driver/kbd/kbd.h>
 
 void kmain64() {
     fb_init();
@@ -30,6 +31,9 @@ void kmain64() {
 
     timer_init();
     kprintf("[mink_kernel] Initialized the timer\n");
+
+    kbd_init();
+    kprintf("[mink_kernel] Initialized keyboard (deDE-darwin)\n");
 
     fb_put_str_at("[mink_kernel][ERROR] kmain returned\n", -1, -1, FB_COLOR(FB_LIGHT_RED, FB_BLACK));
 }

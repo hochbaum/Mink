@@ -75,3 +75,12 @@ uint16_t fb_put_str_at(const char *str, int8_t row, int8_t column, uint8_t color
 
     return offset;
 }
+
+void fb_del() {
+    uint16_t offset = fb_cursor_get_offset() - 2;
+    uint8_t row = FB_GET_OFF_ROW(offset);
+    uint8_t column = FB_GET_OFF_COLUMN(offset);
+
+    fb_put_char_at(' ', row, column, FB_DEFAULT);
+    fb_cursor_move_to(offset);
+}

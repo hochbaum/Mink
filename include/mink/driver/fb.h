@@ -84,4 +84,9 @@ uint16_t fb_put_char_at(char c, int8_t row, int8_t column, uint8_t color);
  */
 uint16_t fb_put_str_at(const char *str, int8_t row, int8_t column, uint8_t color);
 
+/**
+ * Deletes the last character.
+ */
+void fb_del();
+
 #endif //MINK_FB_H
