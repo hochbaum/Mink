@@ -64,7 +64,7 @@ uint16_t fb_put_str_at(const char *str, int8_t row, int8_t column, uint8_t color
         row = FB_GET_OFF_ROW(offset);
         column = FB_GET_OFF_COLUMN(offset);
     } else {
-        offset = FB_CURSOR_OFFSET(color, row);
+        offset = FB_CURSOR_OFFSET(column, row);
     }
 
     while (*str) {
