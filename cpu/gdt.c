@@ -20,10 +20,8 @@ uint64_t gdt_init() {
 
 void gdt_entry_add(uint8_t index, uint64_t flags, uint8_t privilege) {
     if (index != 0) {
-        // shift PL2 and PL3 one bit further because we need 2 bits to fit inside.
-        flags |= ((privilege > 1 ? 46 : 45) << privilege);
+        flags |= 45 << privilege;
     }
-
     gdt_entries[index] = flags;
 }
 
